@@ -53,7 +53,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn zero_seed() {
+    fn zero_seed_rand() {
         // all random numbers generated with seed 0 are 0, let's make sure
         let mut phpr = Php5Random::new(0);
         for _ in 0..100 {
@@ -62,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn one_seed() {
+    fn one_seed_rand() {
         // all random numbers generated with seed 1 are expected to be these values
         let mut phpr = Php5Random::new(1);
         let mut v = Vec::new();
@@ -89,6 +89,25 @@ mod tests {
                 1264095060, 1411549676, 1843993368, 943947739, 1984210012, 855636226, 1749698586,
                 1469348094, 1956297539
             ]
-        )
+        );
+    }
+
+    #[test]
+    fn one_seed_rand_range() {
+        let mut phpr = Php5Random::new(1);
+        let mut v = Vec::new();
+        for _ in 0..100 {
+            v.push(phpr.rand_range(0, 100));
+        }
+        assert_eq!(
+            v,
+            [
+                84, 39, 79, 80, 92, 19, 33, 77, 28, 55, 48, 63, 36, 51, 96, 92, 64, 72, 14, 61, 1,
+                24, 13, 81, 15, 40, 13, 10, 100, 22, 51, 84, 61, 29, 64, 52, 49, 98, 29, 77, 53,
+                77, 40, 90, 28, 35, 81, 92, 7, 95, 53, 8, 19, 66, 89, 35, 6, 2, 46, 6, 24, 98, 91,
+                85, 26, 54, 37, 76, 51, 67, 53, 3, 44, 94, 94, 72, 28, 74, 64, 35, 69, 16, 44, 88,
+                83, 33, 23, 90, 35, 69, 96, 59, 66, 86, 44, 93, 40, 82, 69, 92
+            ]
+        );
     }
 }
